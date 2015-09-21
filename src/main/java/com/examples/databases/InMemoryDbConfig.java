@@ -1,6 +1,5 @@
 package com.examples.databases;
 
-import com.examples.domain.Domain;
 import org.hibernate.cfg.AnnotationConfiguration;
 
 /**
