@@ -4,12 +4,12 @@ import java.sql.*;
 
 public class FirstExample {
     // JDBC driver name and database URL
-    static final String JDBC_DRIVER = "org.hsqldb.jdbcDriver";
-    static final String DB_URL = "jdbc:hsqldb:file:mydb";
+    static final String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
+    static final String DB_URL = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
 
     //  Database credentials
-    static final String USER = "sa";
-    static final String PASS = "";
+    static final String USER = "hbdb";
+    static final String PASS = "password";
 
     public static void main(String[] args) {
         Connection conn = null;

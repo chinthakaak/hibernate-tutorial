@@ -1,7 +1,6 @@
 package com.examples;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 
@@ -16,7 +15,7 @@ public class HibernateUtil {
         try {
             // Create the SessionFactory from hibernate.cfg.xml
 //            return new AnnotationConfiguration().configure().buildSessionFactory();
-            return new Configuration().configure().setProperty(Environment.USER,"hbdb")/*.addClass(com.examples.Message.class)*/.buildSessionFactory();
+            return new Configuration().configure().setProperty(Environment.USER, "hbdb")/*.addClass(com.examples.Message.class)*/.buildSessionFactory();
 
         } catch (Throwable ex) {
             // Make sure you log the exception, as it might be swallowed
