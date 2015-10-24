@@ -9,9 +9,9 @@ import org.hibernate.Transaction;
  */
 public class Main {
     public static void main(String[] args) {
-//        testXmlCfg();
+        testXmlCfg();
         
-//        testProgCfg();
+        testProgCfg();
         
         testAnnoCfg();
     }

@@ -4,9 +4,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -15,8 +17,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "MESSAGESANNOTATED")
 public class MessageAnnotated {
-    @Id @GeneratedValue
-    @Column(name = "MESSAGE_ID")
+    @SequenceGenerator(name = "seq", sequenceName = "MESSAGE_SEQUENCE")
+    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "seq")
+
+    @Column(name = "MSG_ID")
     private Long id;
 
     @Column(name = "MESSAGE_TEXT")
