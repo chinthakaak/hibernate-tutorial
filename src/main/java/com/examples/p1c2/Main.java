@@ -10,10 +10,24 @@ import org.hibernate.Transaction;
 public class Main {
     public static void main(String[] args) {
         testXmlCfg();
-        
+
         testProgCfg();
-        
+
         testAnnoCfg();
+
+        testAnnoCfgNoXML();
+
+    }
+
+    private static void testAnnoCfgNoXML() {
+        Session session = HibernateAnnotationCfgUtilNoXML.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        MessageAnnotated message = new MessageAnnotated("Test");
+
+        Long msgId =(Long) session.save(message);
+        transaction.commit();
+        session.close();
+        HibernateProgramaticCfgUtil.shutdown();
     }
 
     private static void testAnnoCfg() {
