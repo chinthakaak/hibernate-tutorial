@@ -62,4 +62,16 @@
             <column name="CATEGORY" type="varchar(50)"/>
         </createTable>
     </changeSet>
+    <changeSet id="7" author="Kushan">
+        <preConditions onFail="CONTINUE">
+            <dbms type="oracle"/>
+            <not>
+                <tableExists tableName="CATEGORY"/>
+            </not>
+        </preConditions>
+        <createTable tableName="CATEGORY">
+            <column name="CATEGORY_ID" type="int"/>
+            <column name="CATEGORY" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>

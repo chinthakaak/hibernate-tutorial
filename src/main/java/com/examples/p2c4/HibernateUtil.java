@@ -23,6 +23,8 @@ public class HibernateUtil {
                     .setProperty(Environment.SHOW_SQL, "true")
                     .addResource("p2c4/CategoryFieldAccessXML.hbm.xml")
                     .addResource("p2c4/CategoryPropertyAccessXML.hbm.xml")
+                    .addAnnotatedClass(CategoryFieldAccessAnnotation.class)
+                    .addAnnotatedClass(CategoryPropertyAccessAnnotation.class)
                     .buildSessionFactory();
 
         } catch (Throwable ex) {

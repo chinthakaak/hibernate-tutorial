@@ -10,6 +10,33 @@ public class Main {
     public static void main(String[] args) {
         testFieldXML();
         testPropertyXML();
+        testFieldAnnot();
+        testPropertyAnnot();
+    }
+
+    private static void testFieldAnnot() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        CategoryFieldAccessAnnotation categoryFieldAccessAnnotation = new CategoryFieldAccessAnnotation();
+        categoryFieldAccessAnnotation.setId(2L);
+        categoryFieldAccessAnnotation.setCategory("Sample");
+        session.save(categoryFieldAccessAnnotation);
+        transaction.commit();
+        session.close();
+        HibernateUtil.shutdown();
+    }
+
+    private static void testPropertyAnnot() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        CategoryPropertyAccessAnnotation categoryPropertyAccessAnnotation = new CategoryPropertyAccessAnnotation();
+        categoryPropertyAccessAnnotation.setId(1L);
+        categoryPropertyAccessAnnotation.setCategory("Sample");
+        session.save(categoryPropertyAccessAnnotation);
+        transaction.commit();
+        session.close();
+        HibernateUtil.shutdown();
+        
     }
 
     private static void testPropertyXML() {
