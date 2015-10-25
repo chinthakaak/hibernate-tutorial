@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * Created by ka40215 on 9/26/15.
  */
 @Entity
-@Table(name = "MESSAGESANNOTATED")
+@Table(name = "MESSAGES_ANNOTATED")
 public class MessageAnnotated {
     @SequenceGenerator(name = "seq", sequenceName = "MESSAGE_SEQUENCE")
     @Id

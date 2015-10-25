@@ -1,8 +1,8 @@
 package com.examples.p2c4;
 
+import com.examples.p1c2.MessageAnnotated;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 
 /**
@@ -13,7 +13,7 @@ public class HibernateUtil {
 
     private static SessionFactory buildSessionFactory() {
         try {
-            // Create the SessionFactory programatically
+            // Create the SessionFactory pragmatically with annotations
             return new AnnotationConfiguration()
                     .setProperty(Environment.DRIVER, "oracle.jdbc.driver.OracleDriver")
                     .setProperty(Environment.URL, "jdbc:oracle:thin:@127.0.0.1:1521:xe")
@@ -21,7 +21,8 @@ public class HibernateUtil {
                     .setProperty(Environment.PASS, "password")
                     .setProperty(Environment.DIALECT, "org.hibernate.dialect.Oracle10gDialect")
                     .setProperty(Environment.SHOW_SQL, "true")
-                    .addResource("p1c2/Message.hbm.xml")
+                    .addResource("p2c4/CategoryFieldAccessXML.hbm.xml")
+                    .addResource("p2c4/CategoryPropertyAccessXML.hbm.xml")
                     .buildSessionFactory();
 
         } catch (Throwable ex) {
