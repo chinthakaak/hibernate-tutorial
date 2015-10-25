@@ -1,0 +1,65 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <!--p1c2 changelogs-->
+    <changeSet id="1" author="Kushan">
+        <preConditions onFail="CONTINUE">
+            <dbms type="oracle"/>
+            <not>
+                <tableExists tableName="MESSAGES_ANNOTATED"/>
+            </not>
+        </preConditions>
+        <createTable tableName="MESSAGES_ANNOTATED">
+            <column name="MSG_ID" type="long"/>
+            <column name="MESSAGE_TEXT" type="varchar(50)"/>
+            <column name="NEXT_MESSAGE_ID" type="int"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="Kushan">
+        <createSequence sequenceName="SEQ"/>
+        <createSequence sequenceName="MESSAGE_SEQUENCE"/>
+    </changeSet>
+    <changeSet id="3" author="Kushan">
+        <preConditions onFail="CONTINUE">
+            <dbms type="oracle"/>
+            <not>
+                <tableExists tableName="MESSAGES"/>
+            </not>
+        </preConditions>
+        <createTable tableName="MESSAGES">
+            <column name="MSG_ID" type="long"/>
+            <column name="MESSAGE_TEXT" type="varchar(50)"/>
+            <column name="NEXT_MESSAGE_ID" type="int"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="Kushan">
+        <modifyDataType tableName="MESSAGES" columnName="MSG_ID" newDataType="int"/>
+    </changeSet>
+
+    <!-- p2c4 changelogs-->
+    <changeSet id="5" author="Kushan">
+        <preConditions onFail="CONTINUE">
+            <dbms type="oracle"/>
+            <not>
+                <tableExists tableName="CATEGORY_FIELD"/>
+            </not>
+        </preConditions>
+        <createTable tableName="CATEGORY_FIELD">
+            <column name="CATEGORY_ID" type="int"/>
+            <column name="CATEGORY" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="6" author="Kushan">
+        <preConditions onFail="CONTINUE">
+            <dbms type="oracle"/>
+            <not>
+                <tableExists tableName="CATEGORY_PROPERTY"/>
+            </not>
+        </preConditions>
+        <createTable tableName="CATEGORY_PROPERTY">
+            <column name="CATEGORY_ID" type="int"/>
+            <column name="CATEGORY" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
