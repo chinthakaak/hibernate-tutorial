@@ -1,6 +1,7 @@
 package com.examples.p2c6;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 
@@ -10,24 +11,18 @@ import org.hibernate.cfg.Environment;
 public class HibernateUtil {
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
-    private static SessionFactory buildSessionFactoryProgramatically() {
-        try {
-            // Create the SessionFactory from hibernate.cfg.xml
-//            return new AnnotationConfiguration().configure().buildSessionFactory();
-            return new Configuration().configure().setProperty(Environment.USER, "hbdb")/*.addClass(com.examples.Message.class)*/.buildSessionFactory();
-
-        } catch (Throwable ex) {
-            // Make sure you log the exception, as it might be swallowed
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
-
     private static SessionFactory buildSessionFactory() {
         try {
-            // Create the SessionFactory from hibernate.cfg.xml
-//            return new AnnotationConfiguration().configure().buildSessionFactory();
-            return new Configuration().configure().buildSessionFactory();
+            // Create the SessionFactory programmatically
+            return new AnnotationConfiguration()
+                    .setProperty(Environment.DRIVER, "oracle.jdbc.driver.OracleDriver")
+                    .setProperty(Environment.URL, "jdbc:oracle:thin:@127.0.0.1:1521:xe")
+                    .setProperty(Environment.USER, "hbdb")
+                    .setProperty(Environment.PASS, "password")
+                    .setProperty(Environment.DIALECT, "org.hibernate.dialect.Oracle10gDialect")
+                    .setProperty(Environment.SHOW_SQL, "true")
+                    .addResource("p2c6/Item.hbm.xml")
+                    .buildSessionFactory();
 
         } catch (Throwable ex) {
             // Make sure you log the exception, as it might be swallowed

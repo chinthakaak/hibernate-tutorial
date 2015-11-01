@@ -9,10 +9,7 @@ import java.util.Set;
 /**
  * Created by ka40215 on 10/24/15.
  */
-@Entity
-@Table
 public class Item {
-    @Id
     private int itemId;
     private String itemName;
 
