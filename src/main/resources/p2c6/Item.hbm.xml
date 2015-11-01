@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field">
+    <class name="com.examples.p2c6.Item" table="ITEM">
+        <id name="itemId" column="ITEM_ID" type="int">
+            <generator class="sequence">
+                <param name="sequence">seq</param>
+            </generator>
+        </id>
+
+        <property name="itemName" column="NAME" type="string"/>
+        <set name="images">
+            <key column="ITEM_ID"/>
+            <element column="FILENAME" type="string" not-null="true"></element>
+        </set>
+    </class>
+</hibernate-mapping>

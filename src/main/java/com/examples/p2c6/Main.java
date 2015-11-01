@@ -17,11 +17,15 @@ public class Main {
     private static void testSet() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Item item = new Item();
+        Item item = (Item)session.get(Item.class, 1);
+
+        System.out.println(item.getItemName());
+//        Item item = new Item();
 
         Set images = new HashSet();
 //        images.
         item.setImages(images);
+        item.getImages();
 
         ItemImage itemImage = new ItemImage();
 //        session.

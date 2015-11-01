@@ -1,8 +1,5 @@
 package com.examples.p2c6;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,6 +8,15 @@ import java.util.Set;
  */
 public class Item {
     private int itemId;
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
     private String itemName;
 
     private Set images = new HashSet();
