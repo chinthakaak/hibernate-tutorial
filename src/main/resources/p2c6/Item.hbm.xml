@@ -11,9 +11,10 @@
         </id>
 
         <property name="itemName" column="NAME" type="string"/>
-        <set name="images">
+
+        <set name="images" table="ITEM_IMAGE">
             <key column="ITEM_ID"/>
-            <element column="FILENAME" type="string" not-null="true"></element>
+            <element column="FILENAME" type="string" not-null="true"/>
         </set>
     </class>
 </hibernate-mapping>

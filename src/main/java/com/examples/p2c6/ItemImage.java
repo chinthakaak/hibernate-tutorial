@@ -9,7 +9,21 @@ import javax.persistence.Table;
 public class ItemImage {
     private String fileName;
 
-    private int imageId;
-
     private int itemId;
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
 }

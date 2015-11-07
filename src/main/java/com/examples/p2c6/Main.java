@@ -3,7 +3,6 @@ package com.examples.p2c6;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -11,23 +10,32 @@ import java.util.Set;
  */
 public class Main {
     public static void main(String[] args) {
-        testSet();
+//        testGetLoadSave();
+        testSetMapping();
     }
 
-    private static void testSet() {
+    private static void testSetMapping() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         Item item = (Item)session.get(Item.class, 1);
+        Set itemImages = item.getImages();
+        transaction.commit();
+        session.close();
+    }
 
-        System.out.println(item.getItemName());
-//        Item item = new Item();
+    private static void testGetLoadSave() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Item itemGet = (Item)session.get(Item.class, 1);
+        Item itemLoad = (Item)session.load(Item.class, 2);
 
-        Set images = new HashSet();
-//        images.
-        item.setImages(images);
-        item.getImages();
-
-        ItemImage itemImage = new ItemImage();
-//        session.
+        System.out.println(itemGet.getItemName());
+        System.out.println(itemLoad.getItemName());
+        
+        Item item = new Item();
+        item.setItemName("test");
+        session.save(item);
+        transaction.commit();
+        session.close();
     }
 }

@@ -22,6 +22,7 @@ public class HibernateUtil {
                     .setProperty(Environment.DIALECT, "org.hibernate.dialect.Oracle10gDialect")
                     .setProperty(Environment.SHOW_SQL, "true")
                     .addResource("p2c6/Item.hbm.xml")
+                    .addResource("p2c6/ItemImage.hbm.xml")
                     .buildSessionFactory();
 
         } catch (Throwable ex) {
