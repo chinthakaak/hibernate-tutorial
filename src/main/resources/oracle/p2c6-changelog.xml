@@ -1,0 +1,30 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet id="1" author="Kushan">
+        <preConditions onFail="CONTINUE">
+            <dbms type="oracle"/>
+            <not>
+                <tableExists tableName="ITEM"/>
+            </not>
+        </preConditions>
+        <createTable tableName="ITEM">
+            <column name="ITEM_ID" type="int"/>
+            <column name="NAME" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="Kushan">
+        <preConditions onFail="CONTINUE">
+            <dbms type="oracle"/>
+            <not>
+                <tableExists tableName="ITEM_IMAGE"/>
+            </not>
+        </preConditions>
+        <createTable tableName="ITEM_IMAGE">
+            <column name="ITEM_ID" type="int"/>
+            <column name="FILENAME" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
