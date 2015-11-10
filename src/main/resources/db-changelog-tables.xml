@@ -1,0 +1,20 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <include file="src/main/resources/p2c6/db-changelog.xml"/>
+    <!--<changeSet id="drop-tables" author="Kushan" runAlways="true" failOnError="false">-->
+        <!--<preConditions>-->
+                <!--<tableExists tableName="Test123"/>-->
+        <!--</preConditions>-->
+
+        <!--<dropTable tableName="Test123"/>-->
+    <!--</changeSet>-->
+
+    <!--<changeSet id="create-tables" author="Kushan" runAlways="true" failOnError="true">-->
+        <!--<createTable tableName="Test123">-->
+            <!--<column name="id" type="int"></column>-->
+        <!--</createTable>-->
+    <!--</changeSet>-->
+
+</databaseChangeLog>

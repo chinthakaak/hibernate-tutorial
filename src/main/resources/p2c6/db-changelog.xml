@@ -1,0 +1,58 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet id="drop-table-item" author="Kushan" runAlways="true" failOnError="false">
+        <preConditions onFail="CONTINUE">
+            <dbms type="oracle"/>
+            <tableExists tableName="ITEM"/>
+        </preConditions>
+        <dropTable tableName="ITEM" cascadeConstraints="true"/>
+    </changeSet>
+
+    <changeSet id="create-table-item" author="Kushan" runAlways="true" failOnError="false">
+        <createTable tableName="ITEM">
+            <column name="ITEM_ID" type="int"/>
+            <column name="NAME" type="varchar(50)"/>
+        </createTable>
+        <insert tableName="ITEM">
+            <column name="ITEM_ID" value="1"/>
+            <column name="NAME" value="Desktop"/>
+        </insert>
+        <insert tableName="ITEM">
+            <column name="ITEM_ID" value="2"/>
+            <column name="NAME" value="Laptop"/>
+        </insert>
+        <insert tableName="ITEM">
+            <column name="ITEM_ID" value="3"/>
+            <column name="NAME" value="Tab"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="drop-table-item-image" author="Kushan" runAlways="true" failOnError="false">
+        <preConditions onFail="CONTINUE">
+            <dbms type="oracle"/>
+            <tableExists tableName="ITEM_IMAGE"/>
+        </preConditions>
+        <dropTable tableName="ITEM_IMAGE" cascadeConstraints="true"/>
+    </changeSet>
+
+    <changeSet id="create-table-item-image" author="Kushan" runAlways="true" failOnError="false">
+        <createTable tableName="ITEM_IMAGE">
+            <column name="ITEM_ID" type="int"/>
+            <column name="FILENAME" type="varchar(50)"/>
+        </createTable>
+        <insert tableName="ITEM_IMAGE">
+            <column name="ITEM_ID" value="1"/>
+            <column name="FILENAME" value="comp.png"/>
+        </insert>
+        <insert tableName="ITEM_IMAGE">
+            <column name="ITEM_ID" value="1"/>
+            <column name="FILENAME" value="comp2.png"/>
+        </insert>
+        <insert tableName="ITEM_IMAGE">
+            <column name="ITEM_ID" value="2"/>
+            <column name="FILENAME" value="lap.png"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
