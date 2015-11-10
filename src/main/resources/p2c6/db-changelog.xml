@@ -2,12 +2,16 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
-    <changeSet id="drop-table-item" author="Kushan" runAlways="true" failOnError="false">
-        <preConditions onFail="CONTINUE">
-            <dbms type="oracle"/>
-            <tableExists tableName="ITEM"/>
-        </preConditions>
+    <changeSet id="drop-tables" author="Kushan" runAlways="true" failOnError="false">
         <dropTable tableName="ITEM" cascadeConstraints="true"/>
+        <dropTable tableName="ITEM_IMAGE" cascadeConstraints="true"/>
+
+        <dropTable tableName="ITEM_DUPLICATES" cascadeConstraints="true"/>
+        <dropTable tableName="ITEM_IMAGE_DUPLICATES" cascadeConstraints="true"/>
+    </changeSet>
+
+    <changeSet id="drop-sequences" author="Kushan" runAlways="true" failOnError="false">
+        <dropSequence sequenceName="seq"/>
     </changeSet>
 
     <changeSet id="create-table-item" author="Kushan" runAlways="true" failOnError="false">
@@ -29,12 +33,8 @@
         </insert>
     </changeSet>
 
-    <changeSet id="drop-table-item-image" author="Kushan" runAlways="true" failOnError="false">
-        <preConditions onFail="CONTINUE">
-            <dbms type="oracle"/>
-            <tableExists tableName="ITEM_IMAGE"/>
-        </preConditions>
-        <dropTable tableName="ITEM_IMAGE" cascadeConstraints="true"/>
+    <changeSet id="create-sequence" author="Kushan" runAlways="true" failOnError="false">
+        <createSequence sequenceName="seq"/>
     </changeSet>
 
     <changeSet id="create-table-item-image" author="Kushan" runAlways="true" failOnError="false">
@@ -54,5 +54,20 @@
             <column name="ITEM_ID" value="2"/>
             <column name="FILENAME" value="lap.png"/>
         </insert>
+    </changeSet>
+    
+    <changeSet id="create-table-item-duplicates" author="Kushan">
+        <createTable tableName="ITEM_DUPLICATES">
+            <column name="ITEM_ID" type="int"/>
+            <column name="ITEM_NAME" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-table-item-image-duplicates" author="Kushan">
+        <createTable tableName="ITEM_IMAGE_DUPLICATES">
+            <column name="ITEM_IMAGE_ID" type="int"/>
+            <column name="ITEM_ID" type="int"/>
+            <column name="FILENAME" type="varchar(50)"/>
+        </createTable>
     </changeSet>
 </databaseChangeLog>

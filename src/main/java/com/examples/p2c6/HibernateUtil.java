@@ -17,12 +17,14 @@ public class HibernateUtil {
             return new AnnotationConfiguration()
                     .setProperty(Environment.DRIVER, "oracle.jdbc.driver.OracleDriver")
                     .setProperty(Environment.URL, "jdbc:oracle:thin:@127.0.0.1:1521:xe")
-                    .setProperty(Environment.USER, "hbdb")
+                    .setProperty(Environment.USER, "TESTDB")
                     .setProperty(Environment.PASS, "password")
                     .setProperty(Environment.DIALECT, "org.hibernate.dialect.Oracle10gDialect")
                     .setProperty(Environment.SHOW_SQL, "true")
                     .addResource("p2c6/Item.hbm.xml")
                     .addResource("p2c6/ItemImage.hbm.xml")
+                    .addResource("p2c6/ItemDuplicates.hbm.xml")
+                    .addResource("p2c6/ItemImageDuplicates.hbm.xml")
                     .buildSessionFactory();
 
         } catch (Throwable ex) {

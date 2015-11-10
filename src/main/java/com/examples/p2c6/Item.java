@@ -8,6 +8,7 @@ import java.util.Set;
  */
 public class Item {
     private int itemId;
+    private String itemName;
 
     public String getItemName() {
         return itemName;
@@ -17,8 +18,6 @@ public class Item {
         this.itemName = itemName;
     }
 
-    private String itemName;
-
     private Set images = new HashSet();
 
     public Set getImages() {
@@ -27,5 +26,13 @@ public class Item {
 
     public void setImages(Set images) {
         this.images = images;
+    }
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 }
