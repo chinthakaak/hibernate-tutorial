@@ -6,7 +6,7 @@ import java.util.Collection;
 /**
  * Created by ka40215 on 11/10/15.
  */
-public class ItemDuplicates {
+public class ItemDuplicatesIdbag {
     private int itemId;
     private String itemName;
     private Collection images = new ArrayList();

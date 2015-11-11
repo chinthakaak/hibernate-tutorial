@@ -3,7 +3,7 @@
         "-//Hibernate/Hibernate Mapping DTD//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping default-access="field">
-    <class name="com.examples.p2c6.ItemDuplicates" table="ITEM_DUPLICATES">
+    <class name="com.examples.p2c6.ItemDuplicatesIdbag" table="ITEM_DUPLICATES">
         <id name="itemId" column="ITEM_ID">
             <generator class="sequence">
                 <param name="sequence">seq</param>

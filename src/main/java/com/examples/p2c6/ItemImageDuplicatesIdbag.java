@@ -6,7 +6,7 @@ import java.util.Collection;
 /**
  * Created by ka40215 on 11/10/15.
  */
-public class ItemImageDuplicates {
+public class ItemImageDuplicatesIdbag {
     private int itemImageId;
     private int itemId;
     private String fileName;

@@ -22,16 +22,16 @@ public class Main {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
-        ItemDuplicates itemDuplicates = new ItemDuplicates();
-        itemDuplicates.setItemName("book");
+        ItemDuplicatesIdbag itemDuplicatesIdbag = new ItemDuplicatesIdbag();
+        itemDuplicatesIdbag.setItemName("book");
 
         Collection collection = new ArrayList();
         collection.add("b1.png");
         collection.add("b2.png");
         collection.add("b2.png");
 
-        itemDuplicates.setImages(collection);
-        session.save(itemDuplicates);
+        itemDuplicatesIdbag.setImages(collection);
+        session.save(itemDuplicatesIdbag);
         transaction.commit();
         session.close();
     }
