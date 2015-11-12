@@ -6,6 +6,7 @@ import org.hibernate.Transaction;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -16,7 +17,26 @@ public class Main {
 //        testGetLoadSave();
 //        testSetMapping();
 //        testIdbagMapping();
-        testBagMapping();
+//        testBagMapping();
+        testListMapping();
+    }
+
+    private static void testListMapping() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+
+        ItemListMapping itemListMapping = new ItemListMapping();
+        itemListMapping.setItemName("book");
+
+        List collection = new ArrayList();
+        collection.add("b1.png");
+        collection.add("b2.png");
+        collection.add("b2.png");
+
+        itemListMapping.setImages(collection);
+        session.save(itemListMapping);
+        transaction.commit();
+        session.close();
     }
 
 

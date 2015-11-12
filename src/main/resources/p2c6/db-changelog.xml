@@ -3,6 +3,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
     <changeSet id="drop-tables" author="Kushan" runAlways="true" failOnError="false">
+        <!-- SET-->
         <dropTable tableName="ITEM" cascadeConstraints="true"/>
         <dropTable tableName="ITEM_IMAGE" cascadeConstraints="true"/>
 
@@ -13,6 +14,10 @@
         <!-- BAG-->
         <dropTable tableName="ITEM_DUPLICATES_BAG" cascadeConstraints="true"/>
         <dropTable tableName="ITEM_IMAGE_DUPLICATES_BAG" cascadeConstraints="true"/>
+
+        <!-- LIST-->
+        <dropTable tableName="ITEM_LIST_MAPPING" cascadeConstraints="true"/>
+        <dropTable tableName="ITEM_IMAGE_LIST_MAPPING" cascadeConstraints="true"/>
     </changeSet>
 
     <changeSet id="drop-sequences" author="Kushan" runAlways="true" failOnError="false">
@@ -86,6 +91,21 @@
     <changeSet id="create-table-item-image-duplicates-bag" author="Kushan" runAlways="true" failOnError="false">
         <createTable tableName="ITEM_IMAGE_DUPLICATES_BAG">
             <column name="ITEM_ID" type="int"/>
+            <column name="FILENAME" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-table-item-list-mapping" author="Kushan" runAlways="true" failOnError="false">
+        <createTable tableName="ITEM_LIST_MAPPING">
+            <column name="ITEM_ID" type="int"/>
+            <column name="NAME" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-table-item-image-list-mapping" author="Kushan" runAlways="true" failOnError="false">
+        <createTable tableName="ITEM_IMAGE_LIST_MAPPING">
+            <column name="ITEM_ID" type="int"/>
+            <column name="POSITION" type="int"/>
             <column name="FILENAME" type="varchar(50)"/>
         </createTable>
     </changeSet>
