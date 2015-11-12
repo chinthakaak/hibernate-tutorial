@@ -19,9 +19,13 @@
         <dropTable tableName="ITEM_LIST_MAPPING" cascadeConstraints="true"/>
         <dropTable tableName="ITEM_IMAGE_LIST_MAPPING" cascadeConstraints="true"/>
 
-        <!-- Annotations-->
+        <!-- Annotation Set-->
         <dropTable tableName="ITEMA" cascadeConstraints="true"/>
         <dropTable tableName="ITEMA_IMAGE" cascadeConstraints="true"/>
+
+        <!-- Annotation List-->
+        <dropTable tableName="ITEMA_LIST_MAPPING" cascadeConstraints="true"/>
+        <dropTable tableName="ITEMA_IMAGE_LIST_MAPPING" cascadeConstraints="true"/>
     </changeSet>
 
     <changeSet id="drop-sequences" author="Kushan" runAlways="true" failOnError="false">
@@ -124,6 +128,21 @@
     <changeSet id="create-table-itema-image" author="Kushan" runAlways="true" failOnError="false">
         <createTable tableName="ITEMA_IMAGE">
             <column name="ITEM_ID" type="int"/>
+            <column name="FILENAME" type="varchar(30)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-table-itema-list-mapping" author="Kushan" runAlways="true" failOnError="false">
+        <createTable tableName="ITEMA_LIST_MAPPING">
+            <column name="ITEM_ID" type="int"/>
+            <column name="ITEM_NAME" type="varchar(30)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-table-itema-image-list-mapping" author="Kushan" runAlways="true" failOnError="false">
+        <createTable tableName="ITEMA_IMAGE_LIST_MAPPING">
+            <column name="ITEM_ID" type="int"/>
+            <column name="POSITION" type="int"/>
             <column name="FILENAME" type="varchar(30)"/>
         </createTable>
     </changeSet>

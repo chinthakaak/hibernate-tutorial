@@ -22,6 +22,8 @@ public class HibernateUtil {
                     .setProperty(Environment.SHOW_SQL, "true")
                     .addAnnotatedClass(Item.class)
                     .addAnnotatedClass(ItemImage.class)
+                    .addAnnotatedClass(ItemListMapping.class)
+                    .addAnnotatedClass(ItemImageListMapping.class)
                     .buildSessionFactory();
 
         } catch (Throwable ex) {
