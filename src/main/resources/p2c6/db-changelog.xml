@@ -6,8 +6,13 @@
         <dropTable tableName="ITEM" cascadeConstraints="true"/>
         <dropTable tableName="ITEM_IMAGE" cascadeConstraints="true"/>
 
+        <!-- IDBAG-->
         <dropTable tableName="ITEM_DUPLICATES" cascadeConstraints="true"/>
         <dropTable tableName="ITEM_IMAGE_DUPLICATES" cascadeConstraints="true"/>
+
+        <!-- BAG-->
+        <dropTable tableName="ITEM_DUPLICATES_BAG" cascadeConstraints="true"/>
+        <dropTable tableName="ITEM_IMAGE_DUPLICATES_BAG" cascadeConstraints="true"/>
     </changeSet>
 
     <changeSet id="drop-sequences" author="Kushan" runAlways="true" failOnError="false">
@@ -56,16 +61,30 @@
         </insert>
     </changeSet>
     
-    <changeSet id="create-table-item-duplicates" author="Kushan">
+    <changeSet id="create-table-item-duplicates" author="Kushan" runAlways="true" failOnError="false">
         <createTable tableName="ITEM_DUPLICATES">
             <column name="ITEM_ID" type="int"/>
             <column name="ITEM_NAME" type="varchar(50)"/>
         </createTable>
     </changeSet>
 
-    <changeSet id="create-table-item-image-duplicates" author="Kushan">
+    <changeSet id="create-table-item-image-duplicates" author="Kushan" runAlways="true" failOnError="false">
         <createTable tableName="ITEM_IMAGE_DUPLICATES">
             <column name="ITEM_IMAGE_ID" type="int"/>
+            <column name="ITEM_ID" type="int"/>
+            <column name="FILENAME" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-table-item-duplicates-bag" author="Kushan" runAlways="true" failOnError="false">
+        <createTable tableName="ITEM_DUPLICATES_BAG">
+            <column name="ITEM_ID" type="int"/>
+            <column name="ITEM_NAME" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-table-item-image-duplicates-bag" author="Kushan" runAlways="true" failOnError="false">
+        <createTable tableName="ITEM_IMAGE_DUPLICATES_BAG">
             <column name="ITEM_ID" type="int"/>
             <column name="FILENAME" type="varchar(50)"/>
         </createTable>

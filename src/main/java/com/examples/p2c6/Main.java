@@ -15,7 +15,27 @@ public class Main {
     public static void main(String[] args) {
 //        testGetLoadSave();
 //        testSetMapping();
-        testIdbagMapping();
+//        testIdbagMapping();
+        testBagMapping();
+    }
+
+
+    private static void testBagMapping() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+
+        ItemDuplicatesBag itemDuplicatesBag = new ItemDuplicatesBag();
+        itemDuplicatesBag.setItemName("book");
+
+        Collection collection = new ArrayList();
+        collection.add("b1.png");
+        collection.add("b2.png");
+        collection.add("b2.png");
+
+        itemDuplicatesBag.setImages(collection);
+        session.save(itemDuplicatesBag);
+        transaction.commit();
+        session.close();
     }
 
     private static void testIdbagMapping() {

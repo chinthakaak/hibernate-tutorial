@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field">
+    <class name="com.examples.p2c6.ItemImageDuplicatesBag" table="ITEM_IMAGE_DUPLICATES_BAG">
+        <id name="itemId" type="int" column="ITEM_ID"/>
+        <property name="fileName" type="string" column="fileName"/>
+    </class>
+</hibernate-mapping>

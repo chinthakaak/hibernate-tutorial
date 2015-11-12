@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field">
+    <class name="com.examples.p2c6.ItemDuplicatesBag" table="ITEM_DUPLICATES_BAG">
+        <id name="itemId" column="ITEM_ID">
+            <generator class="sequence">
+                <param name="sequence">seq</param>
+            </generator>
+        </id>
+        <property name="itemName" type="string" column="ITEM_NAME"/>
+        <bag name="images" table="ITEM_IMAGE_DUPLICATES_BAG">
+            <key column="ITEM_ID"></key>
+            <element type="string" column="FILENAME" not-null="true"/>
+        </bag>
+    </class>
+</hibernate-mapping>

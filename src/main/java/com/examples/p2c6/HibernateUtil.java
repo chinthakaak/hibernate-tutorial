@@ -25,6 +25,8 @@ public class HibernateUtil {
                     .addResource("p2c6/ItemImage.hbm.xml")
                     .addResource("p2c6/ItemDuplicates.hbm.xml")
                     .addResource("p2c6/ItemImageDuplicates.hbm.xml")
+                    .addResource("p2c6/ItemDuplicatesBag.hbm.xml")
+                    .addResource("p2c6/ItemImageDuplicatesBag.hbm.xml")
                     .buildSessionFactory();
 
         } catch (Throwable ex) {
