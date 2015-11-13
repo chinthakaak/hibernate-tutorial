@@ -19,16 +19,32 @@ import javax.persistence.Table;
  * Created by ka40215 on 11/13/15.
  */
 public class BidItemAnnotation {
+    private static Session session;
+
     public static void main(String[] args) {
-        testBid();
+        session = HibernateUtil.getSessionFactory().openSession();
+
+        testBidSave();
+        testBidGet();
+
+        session.close();
     }
 
-    private static void testBid() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+    private static void testBidGet() {
+        Bid bid = (Bid)session.load(Bid.class,1);
+        System.out.println(bid.getBidAmount());
+        System.out.println(bid.getItem().getItemName());
+
+        Bid bid2 = (Bid)session.get(Bid.class,3);
+        System.out.println(bid2.getBidAmount());
+        System.out.println(bid2.getItem().getItemName());
+    }
+
+    private static void testBidSave() {
         Transaction transaction = session.beginTransaction();
 
         Item item = new Item();
-        item.setItemName("Resistor"+Math.random());
+        item.setItemName("Resistor");
 
         Bid bid1 = new Bid();
         bid1.setBidAmount(100);
@@ -43,7 +59,25 @@ public class BidItemAnnotation {
         session.save(bid2);
 
         transaction.commit();
-        session.close();
+
+        Transaction transaction2 = session.beginTransaction();
+
+        Item item2 = new Item();
+        item2.setItemName("Capacitor");
+
+        Bid bid3 = new Bid();
+        bid3.setBidAmount(3);
+        bid3.setItem(item2);
+
+        Bid bid4 = new Bid();
+        bid4.setBidAmount(6);
+        bid4.setItem(item2);
+
+        session.save(item2);
+        session.save(bid3);
+        session.save(bid4);
+
+        transaction2.commit();
     }
 
 
@@ -56,12 +90,12 @@ public class BidItemAnnotation {
         @Column(name = "BID_ID")
         private int bidId;
 
-        @Column(name = "BID_AMOUNT")
-        private int bidAmount;
-
         @ManyToOne(targetEntity = Item.class)
         @JoinColumn(name = "ITEM_ID", nullable = false)
         private Item item;
+
+        @Column(name = "BID_AMOUNT")
+        private int bidAmount;
 
         public int getBidId() {
             return bidId;
@@ -130,8 +164,8 @@ public class BidItemAnnotation {
                         .setProperty(Environment.PASS, "password")
                         .setProperty(Environment.DIALECT, "org.hibernate.dialect.Oracle10gDialect")
                         .setProperty(Environment.SHOW_SQL, "true")
-//                        .setProperty(Environment.HBM2DDL_AUTO,"create")
-                        .setProperty(Environment.HBM2DDL_AUTO, "update")
+                        .setProperty(Environment.HBM2DDL_AUTO, "create")
+//                        .setProperty(Environment.HBM2DDL_AUTO, "update")
                         .addAnnotatedClass(Bid.class)
                         .addAnnotatedClass(Item.class)
                         .buildSessionFactory();
