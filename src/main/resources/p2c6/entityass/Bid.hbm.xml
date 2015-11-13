@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field">
+    <class name="com.examples.p2c6.entityass.Bid" table="BID">
+        <id name="bidId" type="int" column="BID_ID"/>
+        <many-to-one name="item" column="ITEM_ID" class="com.examples.p2c6.entityass.Item" not-null="true"/>
+    </class>
+</hibernate-mapping>
