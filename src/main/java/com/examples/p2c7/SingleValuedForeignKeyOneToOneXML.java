@@ -26,6 +26,12 @@ public class SingleValuedForeignKeyOneToOneXML {
         address.setUser(user);
         user.setShippingAddress(address);
 
+        Address homeAddress = new Address();
+        homeAddress.setCity("Kottawa");
+        homeAddress.setStreet("233");
+        homeAddress.setZipcode("111");
+        user.setHomeAddress(homeAddress);
+
         User user2 = new User();
         user2.setUserName("Nethum");
         Address address2 = new Address();
@@ -95,6 +101,24 @@ public class SingleValuedForeignKeyOneToOneXML {
         private int id;
         private String userName;
         private Address shippingAddress;
+        private Address homeAddress;
+        private Address billingAddress;
+
+        public Address getHomeAddress() {
+            return homeAddress;
+        }
+
+        public void setHomeAddress(Address homeAddress) {
+            this.homeAddress = homeAddress;
+        }
+
+        public Address getBillingAddress() {
+            return billingAddress;
+        }
+
+        public void setBillingAddress(Address billingAddress) {
+            this.billingAddress = billingAddress;
+        }
 
         public int getId() {
             return id;
@@ -136,7 +160,7 @@ public class SingleValuedForeignKeyOneToOneXML {
                         .setProperty(Environment.SHOW_SQL, "true")
                         .setProperty(Environment.HBM2DDL_AUTO, "create")
 //                        .setProperty(Environment.HBM2DDL_AUTO, "update")
-                        .addResource("p2c7/SingleValuedSharedPrimaryKeyOneToOneXML.hbm.xml")
+                        .addResource("p2c7/SingleValuedForeignKeyOneToOneXML.hbm.xml")
                         .buildSessionFactory();
 
             } catch (Throwable ex) {
