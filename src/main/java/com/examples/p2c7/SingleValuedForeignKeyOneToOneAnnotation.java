@@ -6,6 +6,16 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Environment;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 /**
  * Created by ka40215 on 11/14/15.
  * 
@@ -13,7 +23,7 @@ import org.hibernate.cfg.Environment;
  * rare. In many schemas, a to-one association is represented with a foreign key field
  * and a unique constraint.
  */
-public class SingleValuedForeignKeyOneToOneXML {
+public class SingleValuedForeignKeyOneToOneAnnotation {
     public static void main(String[] args) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
@@ -68,31 +78,51 @@ public class SingleValuedForeignKeyOneToOneXML {
 
         transaction.commit();
 
+        session.close();
+
+        Session session1 = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction1 = session1.beginTransaction();
+
         // reverse dirrection check
-        Address anyAddress = (Address) session.get(Address.class, 2);
+        Address anyAddress = (Address) session1.get(Address.class, 2);
         System.out.println(anyAddress.getUser().getHomeAddress().getCity());
         System.out.println(anyAddress.getUser().getBillingAddress().getCity());
         System.out.println(anyAddress.getUser().getShippingAddress().getCity());
 
-        Address anyAddress1 = (Address) session.get(Address.class, 7);
+        Address anyAddress1 = (Address) session1.get(Address.class, 7);
         System.out.println(anyAddress1.getUser().getHomeAddress().getCity());
         System.out.println(anyAddress1.getUser().getBillingAddress().getCity());
         System.out.println(anyAddress1.getUser().getShippingAddress().getCity());
 
-        Address anyAddress2 = (Address) session.get(Address.class, 4);
+        Address anyAddress2 = (Address) session1.get(Address.class, 4);
         System.out.println(anyAddress2.getUser().getHomeAddress().getCity());
         System.out.println(anyAddress2.getUser().getBillingAddress().getCity());
         System.out.println(anyAddress2.getUser().getShippingAddress().getCity());
 
-        session.close();
+        transaction1.commit();
+
+        session1.close();
 
     }
+    @Entity
+    @Table(name = "ADDRESS")
     private static class Address {
+        @Id
+        @SequenceGenerator(name = "sequence1", sequenceName = "seqq")
+        @GeneratedValue(generator = "sequence1")
+        @Column(name = "ADDRESS_ID")
         private int id;
+
+        @Column(name = "STREET")
         private String street;
+
+        @Column(name = "CITY")
         private String city;
+
+        @Column(name = "ZIPCODE")
         private String zipcode;
 
+        @OneToOne//(mappedBy = "billingAddress")
         private User user;
 
         public int getId() {
@@ -136,11 +166,28 @@ public class SingleValuedForeignKeyOneToOneXML {
         }
     }
 
+    @Entity
+    @Table(name = "USERS")
     private static class User {
+        @Id
+        @SequenceGenerator(name = "sequence2", sequenceName = "seqq")
+        @GeneratedValue(generator = "sequence2")
+        @Column(name = "USER_ID")
         private int id;
+
+        @Column(name = "USER_NAME")
         private String userName;
+
+        @OneToOne(cascade = CascadeType.ALL)
+        @JoinColumn(name = "SHIPPING_ADDRESS")
         private Address shippingAddress;
+
+        @OneToOne(cascade = CascadeType.ALL)
+        @JoinColumn(name = "HOME_ADDRESS")
         private Address homeAddress;
+
+        @OneToOne(cascade = CascadeType.ALL)
+        @JoinColumn(name = "BILLING_ADDRESS")
         private Address billingAddress;
 
         public Address getHomeAddress() {
@@ -199,7 +246,8 @@ public class SingleValuedForeignKeyOneToOneXML {
                         .setProperty(Environment.SHOW_SQL, "true")
                         .setProperty(Environment.HBM2DDL_AUTO, "create")
 //                        .setProperty(Environment.HBM2DDL_AUTO, "update")
-                        .addResource("p2c7/SingleValuedForeignKeyOneToOneXML.hbm.xml")
+                        .addAnnotatedClass(User.class)
+                        .addAnnotatedClass(Address.class)
                         .buildSessionFactory();
 
             } catch (Throwable ex) {

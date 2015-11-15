@@ -14,11 +14,7 @@
         <property name="zipcode" column="ZIPCODE"/>
         
         <one-to-one name="user"
-                    class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$User"
-                    property-ref="shippingAddress"/>
-
-        <!--<one-to-one name="user" class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$User" property-ref="homeAddress"/>-->
-        <!--<one-to-one name="user" class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$User" property-ref="billingAddress"/>-->
+                    class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$User"/>
     </class>
     <class name="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$User" table="USERS">
         <id name="id" type="int" column="USER_ID">
