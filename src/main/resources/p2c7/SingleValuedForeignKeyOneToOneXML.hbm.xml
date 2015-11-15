@@ -5,28 +5,47 @@
 <hibernate-mapping default-access="field">
     <class name="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$Address" table="ADDRESS">
         <id name="id" type="int" column="ADDRESS_ID">
-            <generator class="foreign">
-                <param name="property">user</param>
+            <generator class="sequence">
+                <param name="sequence">seq</param>
             </generator>
         </id>
         <property name="street" column="STREET"/>
         <property name="city" column="CITY"/>
         <property name="zipcode" column="ZIPCODE"/>
         
-        <one-to-one name="user" class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$User" property-ref="shippingAddress"/>
+        <one-to-one name="user"
+                    class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$User"
+                    property-ref="shippingAddress"/>
+
         <!--<one-to-one name="user" class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$User" property-ref="homeAddress"/>-->
         <!--<one-to-one name="user" class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$User" property-ref="billingAddress"/>-->
     </class>
     <class name="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$User" table="USERS">
         <id name="id" type="int" column="USER_ID">
             <generator class="sequence">
-                <param name="sequence">seq_shared</param>
+                <param name="sequence">seq</param>
             </generator>
         </id>
-        <property name="userName" column="USER_NAME"/>
+        <property name="userName"
+                  column="USER_NAME"/>
 
-        <many-to-one name="shippingAddress" class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$Address" cascade="save-update" column="SHIPPING_ADDRESS_ID" unique="true"/>
-        <!--<many-to-one name="homeAddress" class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$Address" cascade="save-update" column="HOME_ADDRESS_ID" unique="true"/>-->
-        <!--<many-to-one name="billingAddress" class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$Address" cascade="save-update" column="BILLING_ADDRESS_ID" unique="true"/>-->
+        <!--The foreign key association was mapped from User to Address with <many-to-one> and a unique constraint to guarantee the 1:1 multiplicity-->
+        <many-to-one name="shippingAddress"
+                     class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$Address"
+                     cascade="save-update"
+                     column="SHIPPING_ADDRESS_ID"
+                     unique="true"/>
+
+        <many-to-one name="homeAddress"
+                     class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$Address"
+                     cascade="save-update"
+                     column="HOME_ADDRESS_ID"
+                     unique="true"/>
+
+        <many-to-one name="billingAddress"
+                     class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$Address"
+                     cascade="save-update"
+                     column="BILLING_ADDRESS_ID"
+                     unique="true"/>
     </class>
 </hibernate-mapping>

@@ -26,11 +26,17 @@ public class SingleValuedForeignKeyOneToOneXML {
         address.setUser(user);
         user.setShippingAddress(address);
 
-//        Address homeAddress = new Address();
-//        homeAddress.setCity("Kottawa");
-//        homeAddress.setStreet("233");
-//        homeAddress.setZipcode("111");
-//        user.setHomeAddress(homeAddress);
+        Address homeAddress = new Address();
+        homeAddress.setCity("Kottawa");
+        homeAddress.setStreet("233");
+        homeAddress.setZipcode("111");
+        user.setHomeAddress(homeAddress);
+
+        Address billingAddress = new Address();
+        billingAddress.setCity("Bil");
+        billingAddress.setStreet("ssss");
+        billingAddress.setZipcode("sdsds");
+        user.setBillingAddress(billingAddress);
 
         User user2 = new User();
         user2.setUserName("Nethum");
@@ -101,24 +107,24 @@ public class SingleValuedForeignKeyOneToOneXML {
         private int id;
         private String userName;
         private Address shippingAddress;
-//        private Address homeAddress;
-//        private Address billingAddress;
-//
-//        public Address getHomeAddress() {
-//            return homeAddress;
-//        }
-//
-//        public void setHomeAddress(Address homeAddress) {
-//            this.homeAddress = homeAddress;
-//        }
-//
-//        public Address getBillingAddress() {
-//            return billingAddress;
-//        }
-//
-//        public void setBillingAddress(Address billingAddress) {
-//            this.billingAddress = billingAddress;
-//        }
+        private Address homeAddress;
+        private Address billingAddress;
+
+        public Address getHomeAddress() {
+            return homeAddress;
+        }
+
+        public void setHomeAddress(Address homeAddress) {
+            this.homeAddress = homeAddress;
+        }
+
+        public Address getBillingAddress() {
+            return billingAddress;
+        }
+
+        public void setBillingAddress(Address billingAddress) {
+            this.billingAddress = billingAddress;
+        }
 
         public int getId() {
             return id;
