@@ -9,6 +9,8 @@
                 <param name="property">user</param>
             </generator>
         </id>
+        <!--When an Address is saved, the primary key value is taken from the user property. The user property is a reference to a User object;-->
+        <!--hence, the primary key value that is inserted is the same as the primary key value of that instance.-->
         <property name="street" column="STREET"/>
         <property name="city" column="CITY"/>
         <property name="zipcode" column="ZIPCODE"/>
