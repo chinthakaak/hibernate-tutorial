@@ -12,6 +12,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -69,8 +70,8 @@ public class SingleValuedSharedPrimaryKeyOneToOneAnnotation {
     @Table(name = "ADDRESS")
     private static class Address {
         @Id
-        @GeneratedValue(generator = "fkGenerator")
         @GenericGenerator(name = "fkGenerator", strategy = "foreign", parameters = @Parameter(name = "property", value = "user"))
+        @GeneratedValue(generator = "fkGenerator")
         @Column(name = "ADDRESS_ID")
         private int id;
 
@@ -84,7 +85,7 @@ public class SingleValuedSharedPrimaryKeyOneToOneAnnotation {
         private String zipcode;
 
         // For association
-        @OneToOne(mappedBy = "shippingAddress")
+        @OneToOne(mappedBy = "shippingAddress", cascade = CascadeType.ALL)
         private User user;
 
         public int getId() {
@@ -132,8 +133,9 @@ public class SingleValuedSharedPrimaryKeyOneToOneAnnotation {
     @Table(name = "USERS")
     private static class User {
         @Id
-        @SequenceGenerator(name = "sequ", sequenceName = "seqannot")
-        @GeneratedValue(generator = "sequ")
+//        @SequenceGenerator(name = "sequ", sequenceName = "seqannot")
+//        @GeneratedValue(generator = "sequ")
+        @GeneratedValue(strategy = GenerationType.AUTO)
         @Column(name = "USER_ID")
         private int id;
 
