@@ -15,6 +15,9 @@
         
         <one-to-one name="user"
                     class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$User"/>
+        <!--<one-to-one name="user"-->
+                    <!--class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$User"-->
+                    <!--property-ref="homeAddress"/>-->
     </class>
     <class name="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$User" table="USERS">
         <id name="id" type="int" column="USER_ID">
