@@ -54,13 +54,13 @@ public class SingleValuedSharedPrimaryKeyOneToOneAnnotation {
         transaction.commit();
 
 //        session.refresh(user);
-        User userX = (User)session.load(User.class,1);
+        User userX = (User)session.load(User.class, 1);
 
         // User to Address direction
         System.out.println(userX.getUserName() +" "+ user.getShippingAddress().getStreet() +" "+ user.getShippingAddress().getCity());
 
 
-        Address addressX = (Address)session.load(Address.class,1);
+        Address addressX = (Address)session.load(Address.class, 1);
 
         // Address to User direction
         System.out.println(addressX.getCity()+" "+addressX.getUser().getUserName()+" "+addressX.getUser().getId());
@@ -71,6 +71,8 @@ public class SingleValuedSharedPrimaryKeyOneToOneAnnotation {
     private static class Address {
         @Id
         @GenericGenerator(name = "fkGenerator", strategy = "foreign", parameters = @Parameter(name = "property", value = "user"))
+//      When an Address is saved, the primary key value is taken from the user property. The user property is a reference to a User object;
+//      hence, the primary key value that is inserted is the same as the primary key value of that instance.
         @GeneratedValue(generator = "fkGenerator")
         @Column(name = "ADDRESS_ID")
         private int id;
@@ -84,7 +86,9 @@ public class SingleValuedSharedPrimaryKeyOneToOneAnnotation {
         @Column(name = "ZIPCODE")
         private String zipcode;
 
-        // For association
+        // Address to User direction in 1:1 association
+        // The effect of the mappedBy attribute is the same as the property-ref in XML mapping:
+        // a simple inverse declaration of an association, naming a property(shippingAddress) on the target entity(User) side.
         @OneToOne(mappedBy = "shippingAddress", cascade = CascadeType.ALL)
         private User user;
 
@@ -142,7 +146,7 @@ public class SingleValuedSharedPrimaryKeyOneToOneAnnotation {
         @Column(name = "USER_NAME")
         private String userName;
 
-        // for asssociation
+        // User to Address direction in 1:1 association
         @OneToOne(cascade = {CascadeType.ALL})
         @PrimaryKeyJoinColumn
         private Address shippingAddress;
