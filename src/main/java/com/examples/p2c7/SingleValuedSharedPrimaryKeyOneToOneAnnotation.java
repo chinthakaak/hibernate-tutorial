@@ -84,7 +84,7 @@ public class SingleValuedSharedPrimaryKeyOneToOneAnnotation {
         private String zipcode;
 
         // For association
-        @OneToOne
+        @OneToOne(mappedBy = "shippingAddress")
         private User user;
 
         public int getId() {
