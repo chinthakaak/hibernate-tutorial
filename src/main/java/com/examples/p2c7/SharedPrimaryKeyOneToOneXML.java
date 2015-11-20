@@ -13,7 +13,7 @@ import org.hibernate.cfg.Environment;
  * rare. In many schemas, a to-one association is represented with a foreign key field
  * and a unique constraint.
  */
-public class SingleValuedSharedPrimaryKeyOneToOneXML {
+public class SharedPrimaryKeyOneToOneXML {
     public static void main(String[] args) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
@@ -136,7 +136,7 @@ public class SingleValuedSharedPrimaryKeyOneToOneXML {
                         .setProperty(Environment.SHOW_SQL, "true")
                         .setProperty(Environment.HBM2DDL_AUTO, "create")
 //                        .setProperty(Environment.HBM2DDL_AUTO, "update")
-                        .addResource("p2c7/SingleValuedSharedPrimaryKeyOneToOneXML.hbm.xml")
+                        .addResource("p2c7/SharedPrimaryKeyOneToOneXML.hbm.xml")
                         .buildSessionFactory();
 
             } catch (Throwable ex) {

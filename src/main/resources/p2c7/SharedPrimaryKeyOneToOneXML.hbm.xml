@@ -3,7 +3,7 @@
         "-//Hibernate/Hibernate Mapping DTD//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping default-access="field">
-    <class name="com.examples.p2c7.SingleValuedSharedPrimaryKeyOneToOneXML$Address" table="ADDRESS">
+    <class name="com.examples.p2c7.SharedPrimaryKeyOneToOneXML$Address" table="ADDRESS">
         <id name="id" type="int" column="ADDRESS_ID">
             <generator class="foreign">
                 <param name="property">user</param>
@@ -15,9 +15,9 @@
         <property name="city" column="CITY"/>
         <property name="zipcode" column="ZIPCODE"/>
         
-        <one-to-one name="user" class="com.examples.p2c7.SingleValuedSharedPrimaryKeyOneToOneXML$User" constrained="true"/>
+        <one-to-one name="user" class="com.examples.p2c7.SharedPrimaryKeyOneToOneXML$User" constrained="true"/>
     </class>
-    <class name="com.examples.p2c7.SingleValuedSharedPrimaryKeyOneToOneXML$User" table="USERS">
+    <class name="com.examples.p2c7.SharedPrimaryKeyOneToOneXML$User" table="USERS">
         <id name="id" type="int" column="USER_ID">
             <generator class="sequence">
                 <param name="sequence">seq_shared</param>
@@ -25,6 +25,6 @@
         </id>
         <property name="userName" column="USER_NAME"/>
         
-        <one-to-one name="shippingAddress" class="com.examples.p2c7.SingleValuedSharedPrimaryKeyOneToOneXML$Address" cascade="save-update"/>
+        <one-to-one name="shippingAddress" class="com.examples.p2c7.SharedPrimaryKeyOneToOneXML$Address" cascade="save-update"/>
     </class>
 </hibernate-mapping>

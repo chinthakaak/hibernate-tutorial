@@ -3,7 +3,7 @@
         "-//Hibernate/Hibernate Mapping DTD//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping default-access="field">
-    <class name="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$Address" table="ADDRESS">
+    <class name="com.examples.p2c7.ForeignKeyOneToOneXML$Address" table="ADDRESS">
         <id name="id" type="int" column="ADDRESS_ID">
             <generator class="sequence">
                 <param name="sequence">seq</param>
@@ -14,12 +14,12 @@
         <property name="zipcode" column="ZIPCODE"/>
         
         <one-to-one name="user"
-                    class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$User"/>
+                    class="com.examples.p2c7.ForeignKeyOneToOneXML$User"/>
         <!--<one-to-one name="user"-->
-                    <!--class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$User"-->
+                    <!--class="com.examples.p2c7.ForeignKeyOneToOneXML$User"-->
                     <!--property-ref="homeAddress"/>-->
     </class>
-    <class name="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$User" table="USERS">
+    <class name="com.examples.p2c7.ForeignKeyOneToOneXML$User" table="USERS">
         <id name="id" type="int" column="USER_ID">
             <generator class="sequence">
                 <param name="sequence">seq</param>
@@ -30,19 +30,19 @@
 
         <!--The foreign key association was mapped from User to Address with <many-to-one> and a unique constraint to guarantee the 1:1 multiplicity-->
         <many-to-one name="shippingAddress"
-                     class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$Address"
+                     class="com.examples.p2c7.ForeignKeyOneToOneXML$Address"
                      cascade="save-update"
                      column="SHIPPING_ADDRESS_ID"
                      unique="true"/>
 
         <many-to-one name="homeAddress"
-                     class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$Address"
+                     class="com.examples.p2c7.ForeignKeyOneToOneXML$Address"
                      cascade="save-update"
                      column="HOME_ADDRESS_ID"
                      unique="true"/>
 
         <many-to-one name="billingAddress"
-                     class="com.examples.p2c7.SingleValuedForeignKeyOneToOneXML$Address"
+                     class="com.examples.p2c7.ForeignKeyOneToOneXML$Address"
                      cascade="save-update"
                      column="BILLING_ADDRESS_ID"
                      unique="true"/>

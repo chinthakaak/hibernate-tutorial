@@ -3,6 +3,8 @@ package com.examples.p2c7;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Environment;
 
@@ -10,20 +12,21 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
  * Created by ka40215 on 11/14/15.
- * 
+ *
  * Shared primary key one-to-one associations aren’t uncommon but are relatively
  * rare. In many schemas, a to-one association is represented with a foreign key field
  * and a unique constraint.
  */
-public class SingleValuedForeignKeyOneToOneAnnotation {
+public class SharedPrimaryKeyOneToOneAnnotation {
     public static void main(String[] args) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
@@ -36,20 +39,6 @@ public class SingleValuedForeignKeyOneToOneAnnotation {
         address.setUser(user);
         user.setShippingAddress(address);
 
-        Address homeAddress = new Address();
-        homeAddress.setCity("Kottawa");
-        homeAddress.setStreet("233");
-        homeAddress.setZipcode("111");
-        homeAddress.setUser(user);
-        user.setHomeAddress(homeAddress);
-
-        Address billingAddress = new Address();
-        billingAddress.setCity("Bil");
-        billingAddress.setStreet("ssss");
-        billingAddress.setZipcode("sdsds");
-        billingAddress.setUser(user);
-        user.setBillingAddress(billingAddress);
-
         User user2 = new User();
         user2.setUserName("Nethum");
         Address address2 = new Address();
@@ -59,57 +48,32 @@ public class SingleValuedForeignKeyOneToOneAnnotation {
         address2.setUser(user2);
         user2.setShippingAddress(address2);
 
-        Address homeAddress2 = new Address();
-        homeAddress2.setCity("2Kottawa");
-        homeAddress2.setStreet("2233");
-        homeAddress2.setZipcode("2111");
-        homeAddress2.setUser(user2);
-        user2.setHomeAddress(homeAddress2);
-
-        Address billingAddress2 = new Address();
-        billingAddress2.setCity("2Bil");
-        billingAddress2.setStreet("2ssss");
-        billingAddress2.setZipcode("2sdsds");
-        billingAddress2.setUser(user2);
-        user2.setBillingAddress(billingAddress2);
-
         session.save(user);
         session.save(user2);
 
         transaction.commit();
 
+//        session.refresh(user);
+        User userX = (User)session.load(User.class, 1);
+
+        // User to Address direction
+        System.out.println(userX.getUserName() +" "+ user.getShippingAddress().getStreet() +" "+ user.getShippingAddress().getCity());
+
+
+        Address addressX = (Address)session.load(Address.class, 1);
+
+        // Address to User direction
+        System.out.println(addressX.getCity()+" "+addressX.getUser().getUserName()+" "+addressX.getUser().getId());
         session.close();
-
-        Session session1 = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction1 = session1.beginTransaction();
-
-        // reverse dirrection check
-        Address anyAddress = (Address) session1.get(Address.class, 2);
-        System.out.println(anyAddress.getUser().getHomeAddress().getCity());
-        System.out.println(anyAddress.getUser().getBillingAddress().getCity());
-        System.out.println(anyAddress.getUser().getShippingAddress().getCity());
-
-        Address anyAddress1 = (Address) session1.get(Address.class, 7);
-        System.out.println(anyAddress1.getUser().getHomeAddress().getCity());
-        System.out.println(anyAddress1.getUser().getBillingAddress().getCity());
-        System.out.println(anyAddress1.getUser().getShippingAddress().getCity());
-
-        Address anyAddress2 = (Address) session1.get(Address.class, 4);
-        System.out.println(anyAddress2.getUser().getHomeAddress().getCity());
-        System.out.println(anyAddress2.getUser().getBillingAddress().getCity());
-        System.out.println(anyAddress2.getUser().getShippingAddress().getCity());
-
-        transaction1.commit();
-
-        session1.close();
-
     }
     @Entity
     @Table(name = "ADDRESS")
     private static class Address {
         @Id
-        @SequenceGenerator(name = "sequence1", sequenceName = "seqq")
-        @GeneratedValue(generator = "sequence1")
+        @GenericGenerator(name = "fkGenerator", strategy = "foreign", parameters = @Parameter(name = "property", value = "user"))
+//      When an Address is saved, the primary key value is taken from the user property. The user property is a reference to a User object;
+//      hence, the primary key value that is inserted is the same as the primary key value of that instance.
+        @GeneratedValue(generator = "fkGenerator")
         @Column(name = "ADDRESS_ID")
         private int id;
 
@@ -122,7 +86,10 @@ public class SingleValuedForeignKeyOneToOneAnnotation {
         @Column(name = "ZIPCODE")
         private String zipcode;
 
-        @OneToOne//(mappedBy = "billingAddress")
+        // Address to User direction in 1:1 association
+        // The effect of the mappedBy attribute is the same as the property-ref in XML mapping:
+        // a simple inverse declaration of an association, naming a property(shippingAddress) on the target entity(User) side.
+        @OneToOne(mappedBy = "shippingAddress", cascade = CascadeType.ALL)
         private User user;
 
         public int getId() {
@@ -170,41 +137,19 @@ public class SingleValuedForeignKeyOneToOneAnnotation {
     @Table(name = "USERS")
     private static class User {
         @Id
-        @SequenceGenerator(name = "sequence2", sequenceName = "seqq")
-        @GeneratedValue(generator = "sequence2")
+//        @SequenceGenerator(name = "sequ", sequenceName = "seqannot")
+//        @GeneratedValue(generator = "sequ")
+        @GeneratedValue(strategy = GenerationType.AUTO)
         @Column(name = "USER_ID")
         private int id;
 
         @Column(name = "USER_NAME")
         private String userName;
 
-        @OneToOne(cascade = CascadeType.ALL)
-        @JoinColumn(name = "SHIPPING_ADDRESS")
+        // User to Address direction in 1:1 association
+        @OneToOne(cascade = {CascadeType.ALL})
+        @PrimaryKeyJoinColumn
         private Address shippingAddress;
-
-        @OneToOne(cascade = CascadeType.ALL)
-        @JoinColumn(name = "HOME_ADDRESS")
-        private Address homeAddress;
-
-        @OneToOne(cascade = CascadeType.ALL)
-        @JoinColumn(name = "BILLING_ADDRESS")
-        private Address billingAddress;
-
-        public Address getHomeAddress() {
-            return homeAddress;
-        }
-
-        public void setHomeAddress(Address homeAddress) {
-            this.homeAddress = homeAddress;
-        }
-
-        public Address getBillingAddress() {
-            return billingAddress;
-        }
-
-        public void setBillingAddress(Address billingAddress) {
-            this.billingAddress = billingAddress;
-        }
 
         public int getId() {
             return id;
@@ -246,8 +191,8 @@ public class SingleValuedForeignKeyOneToOneAnnotation {
                         .setProperty(Environment.SHOW_SQL, "true")
                         .setProperty(Environment.HBM2DDL_AUTO, "create")
 //                        .setProperty(Environment.HBM2DDL_AUTO, "update")
-                        .addAnnotatedClass(User.class)
                         .addAnnotatedClass(Address.class)
+                        .addAnnotatedClass(User.class)
                         .buildSessionFactory();
 
             } catch (Throwable ex) {
