@@ -34,13 +34,13 @@ public class JoinTableForeignKeyOneToOneXML {
         Session session1 = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction1 = session1.beginTransaction();
 
-//        Shipment shipment1 = (Shipment) session1.get(Shipment.class, 1);
-//        System.out.println(shipment1.getShipmentType());
-//        System.out.println(shipment1.getAuction().getItemName());
+        Shipment shipment1 = (Shipment) session1.get(Shipment.class, 1);
+        System.out.println(shipment1.getShipmentType());
+        System.out.println(shipment1.getAuction().getItemName());
 
         Item item1 = (Item) session1.get(Item.class, 2);
         System.out.println(item1.getItemName());
-        System.out.println(item1.getShipment().getShipmentType());
+//        System.out.println(item1.getShipment().getShipmentType());
 
         transaction1.commit();
         session1.close();
@@ -50,8 +50,8 @@ public class JoinTableForeignKeyOneToOneXML {
         private String itemName;
         private Shipment shipment;
 
-//        public Item() {
-//        }
+        public Item() {
+        }
 
         public int getItemId() {
             return itemId;
