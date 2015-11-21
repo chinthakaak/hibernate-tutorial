@@ -6,6 +6,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Environment;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,7 +36,7 @@ public class JoinTableForeignKeyOneToOneAnnotation {
         Shipment shipment = new Shipment();
         shipment.setShipmentType("AIR");
 
-        shipment.setItem(item);
+        shipment.setAuction(item);
 
         session.save(shipment);
 
@@ -47,10 +48,10 @@ public class JoinTableForeignKeyOneToOneAnnotation {
 
         Shipment shipment1 = (Shipment) session1.get(Shipment.class, 1);
         System.out.println(shipment1.getShipmentType());
-        System.out.println(shipment1.getItem().getItemName());
+        System.out.println(shipment1.getAuction().getItemName());
 
-//        Item item1 = (Item) session1.get(Item.class, 2);
-//        System.out.println(item1.getItemName());
+        Item item1 = (Item) session1.get(Item.class, 2);
+        System.out.println(item1.getItemName());
 //        System.out.println(item1.getShipment().getShipmentType());
 
         transaction1.commit();
@@ -58,7 +59,7 @@ public class JoinTableForeignKeyOneToOneAnnotation {
     }
     @Entity
     @Table(name = "ITEM")
-    @SecondaryTable(name = "SHIPMENT_ITEM")
+//    @SecondaryTable(name = "SHIPMENT_ITEM")
     private static class Item {
         @Id
         @SequenceGenerator(name = "seq", sequenceName = "seee")
@@ -69,9 +70,9 @@ public class JoinTableForeignKeyOneToOneAnnotation {
         @Column(name = "ITEM_NAME")
         private String itemName;
 
-        @OneToOne
+//        @OneToOne
 //        @JoinColumn(table = "SHIPMENT_ITEM", )
-        private Shipment shipment;
+//        private Shipment shipment;
 
         public int getItemId() {
             return itemId;
@@ -89,13 +90,13 @@ public class JoinTableForeignKeyOneToOneAnnotation {
             this.itemName = itemName;
         }
 
-        public Shipment getShipment() {
-            return shipment;
-        }
-
-        public void setShipment(Shipment shipment) {
-            this.shipment = shipment;
-        }
+//        public Shipment getShipment() {
+//            return shipment;
+//        }
+//
+//        public void setShipment(Shipment shipment) {
+//            this.shipment = shipment;
+//        }
     }
 
     @Entity
@@ -110,13 +111,21 @@ public class JoinTableForeignKeyOneToOneAnnotation {
         @Column(name = "SHIPMENT_TYPE")
         private String shipmentType;
 
-        @OneToOne
+        @OneToOne(cascade = CascadeType.ALL)
         @JoinTable(
                 name = "SHIPMENT_ITEM",
                 joinColumns = @JoinColumn(name = "SHIPMENT_ID"),
                 inverseJoinColumns = @JoinColumn(name = "ITEM_ID")
                 )
-        private Item item;
+        private Item auction;
+
+        public Item getAuction() {
+            return auction;
+        }
+
+        public void setAuction(Item auction) {
+            this.auction = auction;
+        }
 
         public int getShipmentId() {
             return shipmentId;
@@ -132,14 +141,6 @@ public class JoinTableForeignKeyOneToOneAnnotation {
 
         public void setShipmentType(String shipmentType) {
             this.shipmentType = shipmentType;
-        }
-
-        public Item getItem() {
-            return item;
-        }
-
-        public void setItem(Item item) {
-            this.item = item;
         }
     }
 
