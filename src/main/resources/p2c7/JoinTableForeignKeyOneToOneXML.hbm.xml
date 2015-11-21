@@ -10,9 +10,10 @@
             </generator>
         </id>
         <property name="itemName" column="ITEM_NAME" type="string"/>
-        <one-to-one name="shipment" class="com.examples.p2c7.JoinTableForeignKeyOneToOneXML$Shipment"
-                    cascade="all"
-                    property-ref="item"/>
+        <one-to-one name="shipment"
+                    class="com.examples.p2c7.JoinTableForeignKeyOneToOneXML$Shipment"
+                    cascade="save-update"
+                    property-ref="auction"/>
     </class>
     <class name="com.examples.p2c7.JoinTableForeignKeyOneToOneXML$Shipment" table="SHIPMENT">
         <id name="shipmentId" type="int" column="SHIPMENT_ID">
@@ -22,9 +23,9 @@
         </id>
         <property name="shipmentType"
                   column="SHIPMENT_TYPE" type="string"/>
-        <join table="SHIPMENT_ITEM" optional="true">
+        <join table="SHIPMENT_ITEM" optional="true" inverse="true">
             <key column="SHIPMENT_ID"/>
-            <many-to-one name="item"
+            <many-to-one name="auction"
                          column="ITEM_ID"
                          not-null="true"
                          unique="true"

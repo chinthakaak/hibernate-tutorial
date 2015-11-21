@@ -6,6 +6,17 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Environment;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
+import javax.persistence.SecondaryTable;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 /**
  * Created by ka40215 on 11/14/15.
  * 
@@ -13,7 +24,7 @@ import org.hibernate.cfg.Environment;
  * rare. In many schemas, a to-one association is represented with a foreign key field
  * and a unique constraint.
  */
-public class JoinTableForeignKeyOneToOneXML {
+public class JoinTableForeignKeyOneToOneAnnotation {
     public static void main(String[] args) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
@@ -24,7 +35,7 @@ public class JoinTableForeignKeyOneToOneXML {
         Shipment shipment = new Shipment();
         shipment.setShipmentType("AIR");
 
-        shipment.setAuction(item);
+        shipment.setItem(item);
 
         session.save(shipment);
 
@@ -34,24 +45,33 @@ public class JoinTableForeignKeyOneToOneXML {
         Session session1 = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction1 = session1.beginTransaction();
 
-//        Shipment shipment1 = (Shipment) session1.get(Shipment.class, 1);
-//        System.out.println(shipment1.getShipmentType());
-//        System.out.println(shipment1.getAuction().getItemName());
+        Shipment shipment1 = (Shipment) session1.get(Shipment.class, 1);
+        System.out.println(shipment1.getShipmentType());
+        System.out.println(shipment1.getItem().getItemName());
 
-        Item item1 = (Item) session1.get(Item.class, 2);
-        System.out.println(item1.getItemName());
-        System.out.println(item1.getShipment().getShipmentType());
+//        Item item1 = (Item) session1.get(Item.class, 2);
+//        System.out.println(item1.getItemName());
+//        System.out.println(item1.getShipment().getShipmentType());
 
         transaction1.commit();
         session1.close();
     }
+    @Entity
+    @Table(name = "ITEM")
+    @SecondaryTable(name = "SHIPMENT_ITEM")
     private static class Item {
+        @Id
+        @SequenceGenerator(name = "seq", sequenceName = "seee")
+        @GeneratedValue(generator = "seq")
+        @Column(name = "ITEM_ID")
         private int itemId;
-        private String itemName;
-        private Shipment shipment;
 
-//        public Item() {
-//        }
+        @Column(name = "ITEM_NAME")
+        private String itemName;
+
+        @OneToOne
+//        @JoinColumn(table = "SHIPMENT_ITEM", )
+        private Shipment shipment;
 
         public int getItemId() {
             return itemId;
@@ -78,22 +98,25 @@ public class JoinTableForeignKeyOneToOneXML {
         }
     }
 
+    @Entity
+    @Table(name = "SHIPMENT")
     private static class Shipment {
+        @Id
+        @SequenceGenerator(name = "seq", sequenceName = "seee")
+        @GeneratedValue(generator = "seq")
+        @Column(name = "SHIPMENT_ID")
         private int shipmentId;
+
+        @Column(name = "SHIPMENT_TYPE")
         private String shipmentType;
 
-        public Item getAuction() {
-            return auction;
-        }
-
-        public void setAuction(Item auction) {
-            this.auction = auction;
-        }
-
-        private Item auction;
-
-//        public Shipment() {
-//        }
+        @OneToOne
+        @JoinTable(
+                name = "SHIPMENT_ITEM",
+                joinColumns = @JoinColumn(name = "SHIPMENT_ID"),
+                inverseJoinColumns = @JoinColumn(name = "ITEM_ID")
+                )
+        private Item item;
 
         public int getShipmentId() {
             return shipmentId;
@@ -109,6 +132,14 @@ public class JoinTableForeignKeyOneToOneXML {
 
         public void setShipmentType(String shipmentType) {
             this.shipmentType = shipmentType;
+        }
+
+        public Item getItem() {
+            return item;
+        }
+
+        public void setItem(Item item) {
+            this.item = item;
         }
     }
 
@@ -127,7 +158,8 @@ public class JoinTableForeignKeyOneToOneXML {
                         .setProperty(Environment.SHOW_SQL, "true")
                         .setProperty(Environment.HBM2DDL_AUTO, "create")
 //                        .setProperty(Environment.HBM2DDL_AUTO, "update")
-                        .addResource("p2c7/JoinTableForeignKeyOneToOneXML.hbm.xml")
+                        .addAnnotatedClass(Item.class)
+                        .addAnnotatedClass(Shipment.class)
                         .buildSessionFactory();
 
             } catch (Throwable ex) {
