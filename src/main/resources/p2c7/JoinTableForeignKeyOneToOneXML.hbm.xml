@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field">
+    <class name="com.examples.p2c7.JoinTableForeignKeyOneToOneXML$Item" table="ITEM">
+        <id name="itemId" type="int" column="ITEM_ID">
+            <generator class="sequence">
+                <param name="sequence">seq</param>
+            </generator>
+        </id>
+        <property name="itemName" column="ITEM_NAME" type="string"/>
+        <one-to-one name="shipment" class="com.examples.p2c7.JoinTableForeignKeyOneToOneXML$Shipment"
+                    cascade="all"
+                    property-ref="item"/>
+    </class>
+    <class name="com.examples.p2c7.JoinTableForeignKeyOneToOneXML$Shipment" table="SHIPMENT">
+        <id name="shipmentId" type="int" column="SHIPMENT_ID">
+            <generator class="sequence">
+                <param name="sequence">seq</param>
+            </generator>
+        </id>
+        <property name="shipmentType"
+                  column="SHIPMENT_TYPE" type="string"/>
+        <join table="SHIPMENT_ITEM" optional="true">
+            <key column="SHIPMENT_ID"/>
+            <many-to-one name="item"
+                         column="ITEM_ID"
+                         not-null="true"
+                         unique="true"
+                         cascade="save-update"/>
+        </join>
+    </class>
+</hibernate-mapping>
