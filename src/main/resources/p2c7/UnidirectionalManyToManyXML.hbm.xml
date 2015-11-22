@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field">
+    <class name="com.examples.p2c7.UnidirectionalManyToManyXML$Category" table="CATEGORY">
+        <id name="categoryId" type="int" column="CATEGORY_ID">
+            <generator class="sequence">
+                <param name="sequence">seq</param>
+            </generator>
+        </id>
+        <property name="categoryName" column="CATEGORY_NAME" type="string"/>
+        <set name="items"
+             table="CATEGORY_ITEM"
+             cascade="all">
+            <key column="CATEGORY_ID"/>
+            <many-to-many class="com.examples.p2c7.UnidirectionalManyToManyXML$Item"
+                          column="ITEM_ID"/>
+        </set>
+    </class>
+    <class name="com.examples.p2c7.UnidirectionalManyToManyXML$Item" table="ITEM">
+        <id name="itemId" type="int" column="ITEM_ID">
+            <generator class="sequence">
+                <param name="sequence">seq</param>
+            </generator>
+        </id>
+        <property name="itemName"
+                  column="ITEM_NAME"
+                  type="string"/>
+    </class>
+</hibernate-mapping>
